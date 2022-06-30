@@ -18,11 +18,11 @@ main = hakyllWith config  $ do
         route   idRoute
         compile compressCssCompiler
 
-    match (fromList ["about.rst", "contact.markdown"]) $ do
-        route   $ setExtension "html"
-        compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/default.html" defaultContext
-            >>= relativizeUrls
+--    match (fromList ["about.markdown", "contact.markdown"]) $ do
+--        route   $ setExtension "html"
+--        compile $ pandocCompiler
+--            >>= loadAndApplyTemplate "templates/default.html" defaultContext
+--            >>= relativizeUrls
 
     match "posts/*" $ do
         route $ setExtension "html"
@@ -51,8 +51,8 @@ main = hakyllWith config  $ do
         compile $ do
             posts <- recentFirst =<< loadAll "posts/*"
             let indexCtx =
-                    listField "posts" postCtx (return posts) `mappend`
-                    constField "title" "Home"                `mappend`
+                    listField "posts" postCtx (return (take 5 posts)) `mappend`
+                    constField "title" "Home"                         `mappend`
                     defaultContext
 
             getResourceBody
@@ -66,6 +66,6 @@ main = hakyllWith config  $ do
 --------------------------------------------------------------------------------
 postCtx :: Context String
 postCtx =
-    dateField "date" "%B %e, %Y" `mappend`
+    dateField "date" "%Y-%m-%d" `mappend`
     defaultContext
 
