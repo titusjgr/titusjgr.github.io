@@ -8,6 +8,10 @@ body {
     width: 600px;
 }
 
+a {
+    color: #2020CF;
+}
+
 div#header {
     border-bottom: 2px solid black;
     margin-bottom: 30px;

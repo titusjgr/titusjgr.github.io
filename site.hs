@@ -24,6 +24,12 @@ main = hakyllWith config  $ do
 --            >>= loadAndApplyTemplate "templates/default.html" defaultContext
 --            >>= relativizeUrls
 
+    match "taken-courses.markdown" $ do
+        route   $ setExtension "html"
+        compile $ pandocCompiler
+            >>= loadAndApplyTemplate "templates/default.html" defaultContext
+            >>= relativizeUrls
+
     match "posts/*" $ do
         route $ setExtension "html"
         compile $ pandocCompiler
@@ -60,12 +66,11 @@ main = hakyllWith config  $ do
                 >>= loadAndApplyTemplate "templates/default.html" indexCtx
                 >>= relativizeUrls
 
-    match "templates/*" $ compile templateCompiler
 
+    match "templates/*" $ compile templateCompiler
 
 --------------------------------------------------------------------------------
 postCtx :: Context String
 postCtx =
     dateField "date" "%Y-%m-%d" `mappend`
     defaultContext
-
